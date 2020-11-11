@@ -6,7 +6,7 @@ This repository is built as a solution to a take home test for finding customers
 ### Prerequisites
 Needs `Python 3` installed or `Docker` installed.
 
-### How to run
+### How to INSTALL, RUN and TEST
 - Clone the repository
 - Choose either Python or Docker installation given below:
 
@@ -100,4 +100,41 @@ For example: If a file path is `./tests/fixtures/customers 3.txt`.
 ##### Correct Usage:
 ```
 [RUN COMMAND] local_fp='./tests/fixtures/customers 3.txt'
+```
+
+## OTHER EXAMPLES:
+#### 1. Change filepath for Docker to a path on local machine (Can be done by volume mounting)
+```
+docker run -v [LOCAL PATH TO FOLDER]:[DOCKER CONTAINER FOLDER PATH] proximity local_fp=[DOCKER CONTAINER FOLDER PATH]/[FILENAME] radius=1
+```
+Example:
+```
+docker run -v [LOCAL PATH]/app/tests/fixtures/:/app/temp2/ proximity local_fp=./temp2/customers_2.txt radius=1
+```
+Output:
+```
+Office Location:- 53.339428, -6.257664
+Radius:- 1.0 kms
+
+Customers to be invited:
+
+101: Dhruv Reshamwala
+```
+
+#### 2. Testing for incorrect parameters
+```
+[RUN COMMAND] proximity output=null
+```
+Output:
+```
+Verification Exception: Invalid JSON Entry: Missing key: output
+```
+
+#### 3. Testing for incorrect parameters
+```
+[RUN COMMAND] proximity local_fp=null
+```
+Output:
+```
+Verification Exception: Input Object must contain either local_fp or remote_address
 ```
