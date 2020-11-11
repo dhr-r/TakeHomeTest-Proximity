@@ -36,6 +36,12 @@ class BaseTestClass(unittest.TestCase):
         expected_fp = FIXTURES_FOLDER_PATH + "expected_output_2.txt"
         return (obj, expected_fp)
 
+    def fixture_3(self):
+        obj, expected_fp = self.fixture_1()
+        obj["local_fp"] = FIXTURES_FOLDER_PATH + "customers 3.txt"
+        expected_fp = FIXTURES_FOLDER_PATH + "expected_output_3.txt"
+        return (obj, expected_fp)
+
 class TestRetrieveCustomersToInvite(BaseTestClass):
     
     def correctness_test(self, fixture):
@@ -67,6 +73,7 @@ class TestRetrieveCustomersToInvite(BaseTestClass):
     def test_correct_from_file(self):
         self.correctness_test(self.fixture_1)
         self.correctness_test(self.fixture_2)
+        self.correctness_test(self.fixture_3)
 
     @timeout_decorator.timeout(10)  # Source: https://stackoverflow.com/a/34743601/5115992
     def test_correct_from_remote_source(self):
@@ -163,7 +170,7 @@ class TestVerify_inputs(BaseTestClass):
     
 ################# TESTS #####################
     def test_correctness(self):
-        for f in [self.fixture_1, self.fixture_2, self.fixture_remote_1]:
+        for f in [self.fixture_1, self.fixture_2, self.fixture_3, self.fixture_remote_1]:
             self.correctness_test(f)
         
     def test_input_path_failure(self):
